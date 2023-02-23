@@ -1,3 +1,9 @@
+class StackException extends Exception{
+    public StackException(String s){
+        super(s);
+    }
+}
+
 class Node<T>{
     T data;
     Node<T> next;
@@ -9,6 +15,7 @@ interface Stack<T>{
     public T pop();
     public boolean isEmpty();
     public void display();
+
 }
 
 class stackImpl<T> implements Stack<T>{
@@ -19,6 +26,9 @@ class stackImpl<T> implements Stack<T>{
     }
 
     public void push(T x){
+        // if(isEmpty()){
+        //     throw new StackException("Hello world");
+        // }
         Node<T> t = new Node<T>();
         t.data = x;
         t.next = top;
