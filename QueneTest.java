@@ -7,7 +7,7 @@ interface Quene {
 
     public void display();
 
-    public Super QueneEexcpetion(String s);
+    // public Super QueneEexcpetion(String s);
 }
 
 class QueneImplLL implements Quene {
