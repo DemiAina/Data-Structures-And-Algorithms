@@ -144,7 +144,8 @@ class QueneImplLL implements Quene {
         System.out.println("\nQuenue contents are :");
         System.out.println("Top - ");
         while (t != null) {
-            System.out.println(t.data + " ");
+            // Convert to letter using to char method
+            System.out.println((char) (t.data + 64) + " ");
             t = t.next;
         }
         System.out.println("\n");
@@ -200,6 +201,12 @@ class QueneImplLL implements Quene {
             t.wgt = wgt;
             t.next = adj[u];
             adj[u] = t;
+
+            t = new Node();
+            t.vert = u;
+            t.wgt = wgt;
+            t.next = adj[v];
+            adj[v] = t;
 
         }	       
     }
@@ -259,9 +266,45 @@ class QueneImplLL implements Quene {
 
     public void SPT_Dijkstra(int s)
     {
+        int v, u;
+        int wgt, wgt_sum = 0;
+        int[]  dist, parent, hPos;
+        Node t;
+
+        dist = new int[V+1];
+        parent = new int[V+1];
+        hPos = new int[V+1];
+
 
     }
 
+    // public void DF(int s){
+        
+    //     id = s;
+    //     visited = new int[V+1];
+    //     for(int v = 1; v <= V; ++v)
+    //         visited[v] = 0;
+    //     dfvisit(id,s);
+
+
+
+    // }
+
+    // public void dfvisit(int prev , int v){
+    //     Node t;
+    //     int w;
+    //     prev = id;
+    //     visited[v] = ++id;
+    //     System.out.println("Visited " + toChar(v) + " prev " + toChar(prev));
+    //     for(int u = 1; u <= V; ++u){
+    //         if(visited[u] == 0){
+    //             dfvisit(id,u);
+    //         }
+    //     }
+    // }
+
+    // method to initialise Depth First Traversal of Graph
+    // Assuming graph is connected
     public void DF(int s){
         
         id = s;
@@ -275,17 +318,35 @@ class QueneImplLL implements Quene {
     }
 
     public void dfvisit(int prev , int v){
-        Node t;
-        int w;
+        Node t =  new Node();
         prev = id;
         visited[v] = ++id;
-        System.out.println("Visited " + toChar(v) + " prev " + toChar(prev));
+        int back = 0;
+
+        System.out.println("\n  DF just visited vertex " + toChar(v) + " along edge " + 
+        toChar(back) + "--" + toChar(v) );
         for(int u = 1; u <= V; ++u){
-            if(visited[u] == 0){
+            if(visited[u] == 0 && hasEdge(v,u)){
+                back = v;
                 dfvisit(id,u);
             }
         }
     }
+
+    private boolean hasEdge(int v,int u) {
+        Node n = new Node();
+
+        for(n = adj[v]; n != z; n = n.next) {
+            if(u == n.vert) 
+           {
+                System.out.println("---" + toChar(u));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
 
     public void breadthFirst(int s){
         int v, w;
@@ -304,11 +365,14 @@ class QueneImplLL implements Quene {
                 w = t.vert;
                 if(visited[w] == 0){
                     visited[w] = ++id;
+                    System.out.println("Added to Quenue " + toChar(w));
                     q.enqueue(w);
+                    q.display();
                 }
-            }
+            } 
         }
     }
+    // TODO: Add show visted vertices method
        
 
 }
@@ -323,7 +387,7 @@ public class Assignment {
        
         g.display();
         g.DF(s);
-        g.breadthFirst(s);
+        //g.breadthFirst(s);
        //g.MST_Prim(s);   
        //g.SPT_Dijkstra(s);               
     }
